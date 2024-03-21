@@ -1,8 +1,20 @@
 /**
  * @description Gets config-specific query params as an object
  */
-export const getConfigFromQueryParams = () => {
-  // Make sure non-unrelated query params are passed to the config
+type QueryParamsConfigType = {
+  flowName: string | undefined;
+  clientId: string | undefined;
+  id: string | undefined;
+  token: string | undefined;
+  firstName: string | undefined;
+  lastName: string | undefined;
+  phone: string | undefined;
+  email: string | undefined;
+  language: string | undefined;
+  type: string | undefined;
+};
+
+export const getConfigFromQueryParams = (): QueryParamsConfigType => {
   const {
     b_uid,
     b_cid,
@@ -14,10 +26,9 @@ export const getConfigFromQueryParams = () => {
     b_em,
     b_lang,
     b_eut,
-    // /?b_uid=&b_cid= --> { b_uid: '', b_cid: '' };
   } = Object.fromEntries(new URLSearchParams(window.location.search));
 
-  const queryParamsConfig = {
+  const queryParamsConfig: QueryParamsConfigType = {
     flowName: b_fid,
     clientId: b_cid,
     id: b_uid,
@@ -30,15 +41,13 @@ export const getConfigFromQueryParams = () => {
     type: b_eut,
   };
 
-  // Make sure no empty strings are passed to the config
   return Object.entries(queryParamsConfig).reduce((acc, [key, value]) => {
     if (!value) {
       return acc;
     }
 
-    // @TODO: Remove casting and fix the type
-    acc[key as keyof typeof queryParamsConfig] = value;
+    acc[key as keyof QueryParamsConfigType] = value;
 
     return acc;
-  }, {} as typeof queryParamsConfig);
+  }, {} as QueryParamsConfigType);
 };
