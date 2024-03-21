@@ -20,7 +20,6 @@ export class BackendPersistPlugin extends StatePlugin {
 
   async action({ context, state }: { context: any; event: any; state: any }): Promise<void> {
     const { baseUrl, endpoint, method, headers } = this.#__fetchOptions;
-    // TODO: Find a way to mock global.URL
     const url = `${(baseUrl as string) || ''}${endpoint as string}`;
 
     try {
