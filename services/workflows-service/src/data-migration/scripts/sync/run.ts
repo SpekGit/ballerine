@@ -4,7 +4,7 @@ import { SyncedObject, sync } from './sync';
 (async () => {
   const filePath = path.join(
     __dirname,
-    '../../../../prisma/data-migrations/synced-objects/index.js',
+    '../../../../prisma/data-migrations/synced-objects/index.ts',
   );
   const syncService = await import(filePath);
 
