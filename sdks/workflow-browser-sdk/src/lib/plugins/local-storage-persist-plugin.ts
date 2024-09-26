@@ -1,5 +1,6 @@
 import { StatePlugin } from './state-plugin';
 import { TStatePluginParams } from './types';
+import {LocalStoragePersistError} from './errors';
 
 export class LocalStoragePersistPlugin extends StatePlugin {
   stateNames: string[];
@@ -22,10 +23,7 @@ export class LocalStoragePersistPlugin extends StatePlugin {
 
         resolve();
       } catch (err) {
-        // TODO: Create a custom error type.
-        throw new Error(`Failed to persist state to localStorage`, {
-          cause: err,
-        });
+        throw new LocalStoragePersistError(`Failed to persist state to localStorage`, err);
       }
     });
   }
